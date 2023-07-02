@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UserPost extends StatefulWidget {
-  const UserPost({super.key});
+  String name;
+  UserPost({super.key, required this.name});
 
   @override
   State<UserPost> createState() => _UserPostState();
@@ -10,6 +11,22 @@ class UserPost extends StatefulWidget {
 class _UserPostState extends State<UserPost> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 150,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 3,
+                offset: Offset(4, 8), // Shadow position
+              )
+            ]),
+        child: null,
+      ),
+    );
   }
 }

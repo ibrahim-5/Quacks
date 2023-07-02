@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        backgroundColor: FINAL_BACKGROUND_COLOR,
+        backgroundColor: QuacksColors.FINAL_BACKGROUND_COLOR,
         body: SingleChildScrollView(
           child: Column(children: [
             SizedBox(
@@ -54,34 +54,24 @@ class _LoginFormState extends State<LoginForm> {
                   border: OutlineInputBorder(),
                   hintText: 'Enter Username...',
                   contentPadding: EdgeInsets.all(20.0)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Enter Username";
-                }
-                return null;
-              },
+              validator: validateUserInput,
               onSaved: (newValue) => {enteredUsername = newValue!},
             ),
-            const SizedBox(
-              height: 20,
-            ),
+
+            const SizedBox(height: 20),
+
             // Password Field
             TextFormField(
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter Password...',
                   contentPadding: EdgeInsets.all(20.0)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Enter Password";
-                }
-                return null;
-              },
+              validator: validateUserInput,
               onSaved: (newValue) => {enteredPassword = newValue!},
             ),
-            const SizedBox(
-              height: 25,
-            ),
+
+            const SizedBox(height: 25),
+
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               ElevatedButton(
                   style:
@@ -89,23 +79,17 @@ class _LoginFormState extends State<LoginForm> {
                   onPressed: () {
                     if (_formState.currentState!.validate()) {
                       _formState.currentState!.save();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              "Logging In...\nUsername: $enteredUsername\nPassword: $enteredPassword")));
+                      // API CALL...
                       Navigator.pushNamed(context, '/home');
                     }
                   },
                   child: const Text("Login.")),
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20),
               ElevatedButton(
                   onPressed: () {
                     if (_formState.currentState!.validate()) {
                       _formState.currentState!.save();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              "Signing Up...\nUsername: $enteredUsername\nPassword: $enteredPassword")));
+                      // API CALL...
                       Navigator.pushNamed(context, '/home');
                     }
                   },
@@ -114,4 +98,11 @@ class _LoginFormState extends State<LoginForm> {
           ]),
         ));
   }
+}
+
+String? validateUserInput(value) {
+  if (value == null || value.isEmpty) {
+    return "Enter Password";
+  }
+  return null;
 }
