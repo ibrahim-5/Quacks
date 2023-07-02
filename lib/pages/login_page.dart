@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        backgroundColor: BACKGROUND_COLOR,
+        backgroundColor: FINAL_BACKGROUND_COLOR,
         body: SingleChildScrollView(
           child: Column(children: [
             SizedBox(
@@ -38,8 +38,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _formState = GlobalKey<FormState>();
 
-  var enteredUsername;
-  var enteredPassword;
+  late String enteredUsername;
+  late String enteredPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +60,9 @@ class _LoginFormState extends State<LoginForm> {
                 }
                 return null;
               },
-              onSaved: (newValue) {
-                enteredUsername = newValue;
-              },
+              onSaved: (newValue) => {enteredUsername = newValue!},
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Password Field
@@ -79,9 +77,7 @@ class _LoginFormState extends State<LoginForm> {
                 }
                 return null;
               },
-              onSaved: (newValue) {
-                enteredPassword = newValue;
-              },
+              onSaved: (newValue) => {enteredPassword = newValue!},
             ),
             const SizedBox(
               height: 25,
@@ -94,14 +90,26 @@ class _LoginFormState extends State<LoginForm> {
                     if (_formState.currentState!.validate()) {
                       _formState.currentState!.save();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(enteredPassword + enteredUsername)));
+                          content: Text(
+                              "Logging In...\nUsername: $enteredUsername\nPassword: $enteredPassword")));
+                      Navigator.pushNamed(context, '/home');
                     }
                   },
                   child: const Text("Login.")),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text("Sign Up."))
+              ElevatedButton(
+                  onPressed: () {
+                    if (_formState.currentState!.validate()) {
+                      _formState.currentState!.save();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "Signing Up...\nUsername: $enteredUsername\nPassword: $enteredPassword")));
+                      Navigator.pushNamed(context, '/home');
+                    }
+                  },
+                  child: const Text("Sign Up."))
             ]),
           ]),
         ));
